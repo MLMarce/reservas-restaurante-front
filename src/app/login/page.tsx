@@ -1,16 +1,25 @@
 'use client'
+import { AuthService } from "@/services/auth-service";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
 export default function LoginPage() {
     const { data: session } = useSession()
     const router = useRouter()
 
-    if (session?.user?.name) {
-        router.push('/')
-    }
+    useEffect(() => {
+        if (session?.user?.email) {
+            const authService = new AuthService()
+            authService.createUserAuth(session.user.email).then((response) => {
+                console.log(response)
+            })
+
+        }
+    }, [session])
+
     return (
         <div className="h-screen w-screen relative flex flex-col justify-center items-center bg-[#974b15]/20 overflow-hidden">
             <img src={'/login-screen.png'} className="absolute min-h-full w-full object-cover -z-10" />
