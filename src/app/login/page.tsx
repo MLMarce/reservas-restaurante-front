@@ -1,5 +1,5 @@
 'use client'
-import { AuthService } from "@/services/auth-service";
+import { AuthService, IUser } from "@/services/auth-service";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,8 +13,14 @@ export default function LoginPage() {
     useEffect(() => {
         if (session?.user?.email) {
             const authService = new AuthService()
-            authService.createUserAuth(session.user.email).then((response) => {
-                console.log(response)
+            const user: IUser = {
+                name: session.user.name,
+                email: session.user.email,
+                img: session.user.image
+            }
+            authService.createUserAuth(user).then((response) => {
+                console.log(response);
+                router.push('/');
             })
 
         }

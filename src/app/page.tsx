@@ -1,4 +1,5 @@
 'use client'
+import Button from "@/components/button";
 import Header from "@/components/header";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -42,6 +43,12 @@ export default function Home() {
             <div className="w-24 h-24 bg-black rounded-lg"></div>
           </div>
         </div>
+      </div>
+      <div className=" flex w-full h-auto justify-around">
+        <Button bgColor=" bg-green-500 hover:bg-green-700" onClick={()=>{console.log('click..')}} title="Agregar Mesa" />
+        <Button bgColor=" bg-orange-500 hover:bg-orange-700" onClick={()=>{console.log('click..')}} title="Reservar Mesa" />
+        <Button bgColor=" bg-red-500 hover:bg-red-700" onClick={()=>{console.log('click..')}} title="Eliminar Mesa" />
+        <Button bgColor=" bg-blue-500 hover:bg-blue-700" onClick={()=>{console.log('click..')}} title="Resetear" />
       </div>
       <footer className="text-center">este es el footer</footer>
     </main>

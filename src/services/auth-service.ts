@@ -1,23 +1,21 @@
 import axios from "axios";
 
-interface IUser {
-  name: string;
+export interface IUser {
+  name: string | null | undefined;
   email: string;
-  image?: string;
+  img?: string | null | undefined;
   password?: string;
 }
 
 export class AuthService {
   private url = "http://localhost:3001/auth";
 
-  async createUserAuth(email:string): Promise<any> {
+  async createUserAuth(user: IUser): Promise<any> {
     try {
-      const { data } = await axios.post(`${this.url}/auth/signup-auth0`, {
-        email,
-      });
+      const { data } = await axios.post(`${this.url}/signup-auth0`, user);
       return data;
     } catch (error: any) {
-      throw new Error(error);
+      return error;
     }
   }
 }
