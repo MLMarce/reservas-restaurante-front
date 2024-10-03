@@ -1,11 +1,5 @@
+import { IUser} from "@/interfaces/user-interface";
 import axios from "axios";
-
-export interface IUser {
-  name: string | null | undefined;
-  email: string;
-  img?: string | null | undefined;
-  password?: string;
-}
 
 export class AuthService {
   private url = "http://localhost:3001/auth";

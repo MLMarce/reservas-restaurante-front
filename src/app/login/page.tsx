@@ -1,5 +1,7 @@
 'use client'
-import { AuthService, IUser } from "@/services/auth-service";
+import { useAuth } from "@/context/AuthContext";
+import { ILoginResponse, IUser } from "@/interfaces/user-interface";
+import { AuthService } from "@/services/auth-service";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,6 +11,7 @@ import { useEffect } from "react";
 export default function LoginPage() {
     const { data: session } = useSession()
     const router = useRouter()
+    const {setUser, setToken} = useAuth()
 
     useEffect(() => {
         if (session?.user?.email) {
@@ -18,10 +21,11 @@ export default function LoginPage() {
                 email: session.user.email,
                 img: session.user.image
             }
-            authService.createUserAuth(user).then((response) => {
-                console.log(response);
+            authService.createUserAuth(user).then((response: ILoginResponse) => {
+                setUser(response.userData)
+                setToken(response.token)
                 router.push('/');
-            })
+            }).catch((error) => console.log(error));
 
         }
     }, [session])
