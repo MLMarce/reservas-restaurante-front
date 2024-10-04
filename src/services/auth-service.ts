@@ -1,4 +1,4 @@
-import { IUser} from "@/interfaces/user-interface";
+import { IRegisterUser, IUser} from "@/interfaces/user-interface";
 import axios from "axios";
 
 export class AuthService {
@@ -7,6 +7,14 @@ export class AuthService {
   async createUserAuth(user: IUser): Promise<any> {
     try {
       const { data } = await axios.post(`${this.url}/signup-auth0`, user);
+      return data;
+    } catch (error: any) {
+      return error;
+    }
+  }
+  async registerUser(user: IRegisterUser){
+    try {
+      const { data } = await axios.post(`${this.url}/signup`, user);
       return data;
     } catch (error: any) {
       return error;

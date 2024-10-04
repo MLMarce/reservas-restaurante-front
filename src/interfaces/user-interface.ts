@@ -21,3 +21,15 @@ export interface ILoginResponse {
     token: string;
     userData: IUserData
 }
+
+export interface IEditData {
+  name: string | undefined,
+  phone: string | number | undefined 
+}
+
+export interface IRegisterUser {
+  name: string;
+  email: string;
+  password: string;
+  phone: number;
+}

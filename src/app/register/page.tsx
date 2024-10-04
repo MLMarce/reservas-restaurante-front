@@ -1,4 +1,5 @@
 'use client'
+import { AuthService } from "@/services/auth-service";
 import { registerFormValidation } from "@/utils/form-validations";
 import { error } from "console";
 import Link from "next/link";
@@ -14,6 +15,8 @@ export default function RegisterPage() {
     })
     const [errors, setErrors] = useState({})
 
+    const authService = new AuthService()
+
     const handleInputChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
         setErrors(registerFormValidation(formData))
@@ -21,6 +24,13 @@ export default function RegisterPage() {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         setErrors(registerFormValidation(formData))
+        if(!errors){
+            try{
+                authService.registerUser({name: formData.name, email: formData.email, password: formData.password, phone: Number(formData.phone)})
+            } catch(error){
+                console.error(error)
+            }
+        }
         console.log("Registro completado");
     }
     return (
